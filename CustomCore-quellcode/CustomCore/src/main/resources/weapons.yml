@@ -1,0 +1,173 @@
+# ============================================================
+#  weapons.yml  -  Custom-Waffen
+#  Neue Waffe = neuer Eintrag. Danach /weapon reload
+#  Namen/Lore nutzen MiniMessage: <red>, <gradient:#ff0000:#0000ff>, <bold> ...
+#
+#  Ability-Typen (gelten für on-hit UND on-right-click):
+#    ignite      seconds, target(target|self)
+#    damage      amount, target
+#    potion      effect, seconds, amplifier, target(target|self), radius (optional, AOE)
+#    lifesteal   percent (0.3 = 30% des Schadens)  [nur on-hit]
+#    knockback   strength, up, target
+#    lightning   damage, radius          (trifft Ziel bzw. anvisierten Block)
+#    explosion   power, fire, break-blocks
+#    shockwave   radius, damage, knockback, up, particle
+#    dash        strength
+#    fireball    speed, yield, fire
+#    heal        amount, percent
+#    particle    particle, count, spread, speed, at(target|self)
+#    sound       sound (z.B. entity.blaze.shoot), volume, pitch
+#    message     text (MiniMessage)
+#    bat_teleport seconds, invisible  (Fledermaus + Unsichtbarkeit, danach Teleport zur Fledermaus)
+#    command     commands: [..]  Platzhalter %player% %target% (Konsole führt aus)
+#  Jede Ability optional: chance: 0.0 - 1.0
+# ============================================================
+weapons:
+  flame_blade:
+    material: NETHERITE_SWORD
+    name: "<gradient:#ff8800:#ff2200><bold>Flammenklinge</bold></gradient>"
+    lore:
+      - "<gray>Setzt Gegner in Brand."
+      - "<yellow>Rechtsklick: <white>Feuerball"
+    damage: 9
+    attack-speed: 1.6
+    unbreakable: true
+    glow: true
+    # item-model: "meinpack:flame_blade"   # für Resource Packs (1.21.2+)
+    on-hit:
+      cooldown: 0
+      abilities:
+        - type: ignite
+          seconds: 4
+        - type: particle
+          particle: FLAME
+          count: 20
+          at: target
+    on-right-click:
+      cooldown: 6
+      abilities:
+        - type: sound
+          sound: entity.blaze.shoot
+        - type: fireball
+          speed: 1.5
+          yield: 0
+
+  frost_axe:
+    material: DIAMOND_AXE
+    name: "<aqua><bold>Frostaxt</bold>"
+    lore:
+      - "<gray>Verlangsamt getroffene Gegner."
+      - "<yellow>Rechtsklick: <white>Frost-Schockwelle"
+    damage: 10
+    attack-speed: 1.0
+    on-hit:
+      abilities:
+        - type: potion
+          effect: slowness
+          seconds: 3
+          amplifier: 1
+        - type: particle
+          particle: SNOWFLAKE
+          count: 25
+    on-right-click:
+      cooldown: 10
+      abilities:
+        - type: shockwave
+          radius: 5
+          damage: 6
+          knockback: 1.0
+          particle: SNOWFLAKE
+        - type: potion
+          effect: slowness
+          seconds: 5
+          amplifier: 2
+          radius: 5
+        - type: sound
+          sound: block.glass.break
+
+  thunder_blade:
+    material: DIAMOND_SWORD
+    name: "<yellow><bold>Donnerklinge</bold>"
+    lore:
+      - "<gray>30% Chance auf einen Blitz."
+      - "<yellow>Rechtsklick: <white>Blitz auf anvisiertes Ziel"
+    damage: 8
+    attack-speed: 1.6
+    glow: true
+    on-hit:
+      abilities:
+        - type: lightning
+          damage: 5
+          chance: 0.3
+    on-right-click:
+      cooldown: 8
+      abilities:
+        - type: lightning
+          damage: 10
+          radius: 3
+
+  vampire_dagger:
+    material: IRON_SWORD
+    name: "<dark_red><bold>Vampirdolch</bold>"
+    lore:
+      - "<gray>Heilt dich um 30% des Schadens."
+      - "<yellow>Rechtsklick: <white>Dash"
+    damage: 6
+    attack-speed: 2.0
+    on-hit:
+      abilities:
+        - type: lifesteal
+          percent: 0.3
+    on-right-click:
+      cooldown: 4
+      abilities:
+        - type: dash
+          strength: 1.8
+        - type: sound
+          sound: entity.bat.takeoff
+
+  earthbreaker:
+    material: MACE
+    name: "<gold><bold>Erdbrecher</bold>"
+    lore:
+      - "<gray>Schleudert Gegner weg."
+      - "<yellow>Rechtsklick: <white>Erdbeben"
+    damage: 11
+    attack-speed: 0.8
+    on-hit:
+      abilities:
+        - type: knockback
+          strength: 1.5
+          up: 0.5
+    on-right-click:
+      cooldown: 12
+      abilities:
+        - type: shockwave
+          radius: 7
+          damage: 8
+          knockback: 1.6
+          up: 0.8
+          particle: CLOUD
+        - type: sound
+          sound: entity.generic.explode
+
+  vampiric_needle:
+    material: NETHERITE_SWORD
+    name: "<dark_purple><bold>Vampiric Needle</bold>"
+    lore:
+      - "<gray>Heilt dich um 5% des zugefügten Schadens."
+      - "<yellow>Rechtsklick: <white>Fledermaus-Teleport"
+      - "<dark_gray>5 Sek. unsichtbar, dann Teleport zur Fledermaus."
+    damage: 8
+    attack-speed: 1.6
+    unbreakable: true
+    on-hit:
+      abilities:
+        - type: lifesteal
+          percent: 0.05
+    on-right-click:
+      cooldown: 15
+      abilities:
+        - type: bat_teleport
+          seconds: 5
+          invisible: true

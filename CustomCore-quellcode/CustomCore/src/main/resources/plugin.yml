@@ -1,0 +1,20 @@
+name: CustomCore
+version: 1.0.0
+main: dev.customcore.CustomCorePlugin
+api-version: '1.21.11'
+description: Custom-Waffen (Hit-Effekte, Rechtsklicks) und Boss-Framework
+commands:
+  weapon:
+    description: Custom-Waffen verwalten
+    usage: /weapon <give|list|reload>
+    aliases: [cw]
+    permission: customcore.weapon
+  boss:
+    description: Bosse verwalten
+    usage: /boss <spawn|list|killall|reload>
+    permission: customcore.boss
+permissions:
+  customcore.weapon:
+    default: op
+  customcore.boss:
+    default: op
